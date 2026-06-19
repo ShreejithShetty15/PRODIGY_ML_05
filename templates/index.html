@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NutriVision AI</title>
+
+    <link rel="stylesheet"
+    href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<div class="background-glow"></div>
+
+<div class="container">
+
+    <header>
+        <div>
+            <h1>🍕 NutriVision AI</h1>
+            <p>
+                AI Powered Food Recognition &
+                Nutrition Intelligence Platform
+            </p>
+        </div>
+
+        <div class="status">
+            ACTIVE
+        </div>
+    </header>
+
+    <div class="main-grid">
+
+        <!-- LEFT PANEL -->
+
+        <div class="left-panel">
+
+            <form method="POST"
+                  enctype="multipart/form-data"
+                  class="upload-card">
+
+                <h2>Upload Food Image</h2>
+
+                <div class="upload-zone">
+                    <input
+                        type="file"
+                        name="image"
+                        required
+                    >
+                </div>
+
+                <button type="submit">
+                    Analyze Food
+                </button>
+
+            </form>
+
+            {% if result %}
+
+            <div class="image-preview-card">
+
+                <h2>Uploaded Image</h2>
+
+                <img
+                src="/uploads/{{ result.image }}"
+                class="preview-image">
+
+            </div>
+
+            {% endif %}
+
+        </div>
+
+        <!-- RIGHT PANEL -->
+
+        <div class="right-panel">
+
+            {% if result %}
+
+            <div class="analysis-card">
+
+                <div class="analysis-header">
+
+                    <div>
+                        <h2>{{ result.label }}</h2>
+                        <p>Detected Food Item</p>
+                    </div>
+
+                    <div class="confidence">
+                        {{ result.confidence }}%
+                    </div>
+
+                </div>
+
+                <div class="progress-container">
+
+                    <div
+                    class="progress-bar"
+                    style="width:{{ result.confidence }}%">
+                    </div>
+
+                </div>
+
+                <div class="nutrition-grid">
+
+                    <div class="metric-card">
+                        <h3>🔥 Calories</h3>
+                        <span>
+                            {{ result.nutrition.calories }}
+                        </span>
+                    </div>
+
+                    <div class="metric-card">
+                        <h3>💪 Protein</h3>
+                        <span>
+                            {{ result.nutrition.protein }}
+                        </span>
+                    </div>
+
+                    <div class="metric-card">
+                        <h3>🍚 Carbs</h3>
+                        <span>
+                            {{ result.nutrition.carbs }}
+                        </span>
+                    </div>
+
+                    <div class="metric-card">
+                        <h3>🥑 Fat</h3>
+                        <span>
+                            {{ result.nutrition.fat }}
+                        </span>
+                    </div>
+
+                </div>
+
+                <div class="ai-summary">
+
+                    <h3>AI Analysis</h3>
+
+                    <p>
+                        NutriVision AI detected
+                        <strong>{{ result.label }}</strong>
+                        with a confidence score of
+                        <strong>{{ result.confidence }}%</strong>.
+
+                        Estimated nutritional values
+                        have been generated based on
+                        recognized food category data.
+                    </p>
+
+                </div>
+
+            </div>
+
+            {% else %}
+
+            <div class="empty-state">
+
+                <h2>Ready For Analysis</h2>
+
+                <p>
+                    Upload a food image to receive
+                    AI powered nutritional insights.
+                </p>
+
+            </div>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+    <footer>
+        © 2026 Shreejith Shetty • NutriVision AI
+    </footer>
+
+</div>
+
+</body>
+</html>
